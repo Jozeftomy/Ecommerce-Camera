@@ -1,5 +1,5 @@
 import React from 'react';
-import  Lock  from 'lucide-react';
+import { Lock } from 'lucide-react';
 import Link from 'next/link';
 
 const RegisterPage = () => {
