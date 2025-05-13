@@ -12,21 +12,21 @@ export const Banner = () => {
             Discover the latest cameras — from everyday moments to epic adventures, we've got your perfect shot covered.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-            <button className="px-6 py-3 bg-[#EB3238] text-white font-semibold rounded-full hover:opacity-90 transition">
+            <button className="px-6 py-3 bg-[#EB3238] text-white font-semibold rounded-full hover:opacity-90 transition hover:cursor-pointer">
               Shop Now
             </button>
-            <button className="px-6 py-3 border-2 border-[#EB3238] text-[#EB3238] bg-white font-semibold rounded-full hover:bg-[#ffeaea] transition">
+            <button className="px-6 py-3 border-2 border-[#EB3238] text-[#EB3238] bg-white font-semibold rounded-full hover:bg-[#ffeaea] transition hover:cursor-pointer">
               Find Your Camera
             </button>
           </div>
         </div>
-        <div className="w-full md:w-1/2 flex justify-center">
-          <img
-            src="/images/banner-image.png"
-            alt="Camera Banner"
-            className="w-full max-w-[500px] h-auto object-contain"
-          />
-        </div>
+        <div className="w-full md:w-1/2 flex justify-end">
+        <img
+          src="/images/banner-image.png"
+          alt="Camera Banner"
+          className="w-full max-w-[500px] h-auto object-contain"
+        />
+      </div>
       </div>
     </div>
   );

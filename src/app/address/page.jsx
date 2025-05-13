@@ -12,20 +12,14 @@ const Page = () => {
         <div className="flex items-center gap-2 text-[16px] sm:text-[18px] font-medium text-[#292627CC] font-manrope flex-wrap">
           <span>Home</span>
           <span>{'>'}</span>
-          <span>Product</span>
-          <span>{'>'}</span>
-          <span>Product Details</span>
-          <span>{'>'}</span>
-          <span>Checkout</span>
+          <span>Profile</span>
           <span>{'>'}</span>
           <span className="text-[#EB3238]">My Address</span>
         </div>
       </div>
-
-      {/* Smaller Main Section */}
       <div className="w-[75%] max-w-[750px] mt-[4%] mb-[8%] px-[3%] py-[3%] border border-[#00000033] rounded-[5%] bg-white shadow-sm">
         <h2 className="text-[6vw] sm:text-[3vw] md:text-[2vw] font-bold text-[#292627] font-manrope mb-[5%]">
-          Delivery Address
+          Edit Address
         </h2>
 
         <div className="flex flex-col gap-[4%]">
@@ -68,7 +62,7 @@ const Page = () => {
     <ChevronLeft size={20} /> Back
   </button>
 
-          <button className="w-[180px] h-[45px] rounded-[40px] bg-[#EB3238] text-white font-semibold hover:bg-[#c72c30] transition-all hover:cursor-pointer">
+          <button className="w-[180px] h-[45px] rounded-[40px] bg-[#EB3238] text-white font-semibold hover:bg-[#c72c30] transition-all">
             Save Address
           </button>
         </div>

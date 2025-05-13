@@ -12,7 +12,7 @@ const Category = () => {
         {categories.map((name, index) => (
           <div
             key={index}
-            className="w-[45%] sm:w-[30%] md:w-[18%] aspect-square rounded-2xl border border-[#D1D1D1] bg-white flex flex-col items-center justify-center p-4"
+            className="w-[45%] sm:w-[30%] md:w-[18%] aspect-square rounded-2xl border border-[#D1D1D1] bg-white flex flex-col items-center justify-center p-4 hover:cursor-pointer hover:shadow-lg transition duration-300 ease-in-out"
           >
             <img
               src={`/images/category-${index + 1}.png`}

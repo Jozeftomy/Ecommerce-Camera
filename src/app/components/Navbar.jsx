@@ -10,24 +10,28 @@ export const Navbar = () => {
           <span className="text-[#EB3238]">L</span>ogo Here.
         </p>
       </div>
+
       <div className="hidden md:flex w-auto max-w-[620px] h-[40px] gap-[4px]">
-      <Link href="/">
-          <div className="px-[12px] py-[8px] flex items-center justify-center text-[14px] md:text-[16px] font-manrope font-semibold capitalize text-[#5F5B5C] hover:underline cursor-pointer">
+        <Link href="/">
+          <div className="px-[12px] py-[8px] flex items-center justify-center text-[14px] md:text-[16px] font-manrope font-semibold capitalize text-[#5F5B5C] hover:text-[#EB3238] cursor-pointer">
             Home
           </div>
         </Link>
-        <div className="px-[12px] py-[8px] flex items-center justify-center text-[14px] md:text-[16px] font-manrope font-semibold capitalize text-[#5F5B5C]">
+        <div className="px-[12px] py-[8px] flex items-center justify-center text-[14px] md:text-[16px] font-manrope font-semibold capitalize text-[#5F5B5C] hover:text-[#EB3238] cursor-pointer">
           Categories
         </div>
         <Link href="/products">
-          <div className="px-[12px] py-[8px] flex items-center justify-center text-[14px] md:text-[16px] font-manrope font-semibold capitalize text-[#5F5B5C] hover:underline cursor-pointer">
+          <div className="px-[12px] py-[8px] flex items-center justify-center text-[14px] md:text-[16px] font-manrope font-semibold capitalize text-[#5F5B5C] hover:text-[#EB3238] cursor-pointer">
             Products
           </div>
         </Link>
-        <div className="px-[12px] py-[8px] flex items-center justify-center text-[14px] md:text-[16px] font-manrope font-semibold capitalize text-[#5F5B5C]">
+        <Link href="/orders">
+        <div className="px-[12px] py-[8px] flex items-center justify-center text-[14px] md:text-[16px] font-manrope font-semibold capitalize text-[#5F5B5C] hover:text-[#EB3238] cursor-pointer">
           My Orders
         </div>
+        </Link>
       </div>
+
       <div className="flex items-center gap-[15px]">
         <div className="w-[40px] h-[40px] flex items-center justify-center rounded-[8px] p-[10px] bg-[#FFF3F3]">
           <Search size={20} color="#5F5B5C" />

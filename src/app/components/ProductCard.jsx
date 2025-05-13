@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProductCard = () => {
   return (
-    <div className="w-[384px] h-[495.69px] p-[18px] bg-white border border-[#D1D1D1] rounded-[12px] flex flex-col gap-[13px]">
+    <div className="w-[384px] h-[495.69px] p-[18px] bg-white border border-[#D1D1D1] rounded-[12px] flex flex-col gap-[13px] hover:cursor-pointer">
       <div className="w-[348px] h-[267.69px] bg-gray-100 rounded-[12px] flex items-center justify-center">
         <span className="text-gray-400">Image Here</span>
       </div>
@@ -21,7 +21,7 @@ const ProductCard = () => {
         </div>
         <div className="flex items-center justify-between">
           <span className="text-[20px] font-semibold text-black">₹ 1,74,999</span>
-          <button className="px-6 py-2 border border-[#EB3238] text-[#EB3238] font-semibold rounded-full hover:bg-[#EB3238] hover:text-white transition">
+          <button className="px-6 py-2 border border-[#EB3238] text-[#EB3238] font-semibold rounded-full hover:bg-[#EB3238] hover:text-white transition hover:cursor-pointer">
             Buy Now
           </button>
         </div>

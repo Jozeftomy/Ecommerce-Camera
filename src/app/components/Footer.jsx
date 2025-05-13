@@ -27,6 +27,7 @@ const Footer = () => {
             </li>
           </ul>
         </div>
+
         <div className="w-full max-w-[230px] flex flex-col gap-[20px] items-center md:items-start text-center md:text-left">
           <h3 className="text-[18px] font-bold capitalize text-[#292627] font-manrope">
             Shop

@@ -80,7 +80,7 @@ const ProductsPage = () => {
             </div>
           ))}
         </div>
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-4 hover:cursor-pointer">
           <ReactPaginate
             breakLabel="..."
             nextLabel=">"

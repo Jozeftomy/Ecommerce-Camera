@@ -65,7 +65,7 @@ const ExploreProductsSection = () => {
         ))}
       </div>
       <div className="flex justify-center mt-8">
-        <button className="px-6 py-2 border border-[#EB3238] text-white bg-[#EB3238] font-semibold rounded-full hover:bg-white hover:text-[#EB3238] transition">
+        <button className="px-6 py-2 border border-[#EB3238] text-white bg-[#EB3238] font-semibold rounded-full hover:bg-white hover:text-[#EB3238] transition hover:cursor-pointer">
           Explore More
         </button>
       </div>
