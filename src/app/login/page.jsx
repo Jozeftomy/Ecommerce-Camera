@@ -25,6 +25,15 @@ const Page = () => {
               className="w-full h-[56px] px-[16px] rounded-[12px] bg-[#FFEDED] placeholder:text-[#A0A0A0] focus:outline-none"
             />
           </div>
+          <div className="text-right">
+          <Link
+  href="/forgot-password"
+  className="text-[#EB3238] text-[14px] font-medium cursor-pointer hover:underline"
+>
+  Forgot Password?
+</Link>
+
+  </div>
           <button
             type="submit"
             className="w-full h-[50px] bg-[#EB3238] text-white font-semibold rounded-full hover:bg-[#d11e2b] transition"
