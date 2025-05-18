@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Navbar } from '../components/Navbar';
 import ProductCard from '../components/ProductCard';
+import Footer from '../components/Footer';  
 import { Search, SlidersHorizontal, ArrowUpDown } from 'lucide-react';
 import ReactPaginate from 'react-paginate';
 
@@ -23,7 +24,6 @@ const ProductsPage = () => {
   const [filterRating, setFilterRating] = useState(false);
   const [sortOrder, setSortOrder] = useState('default');
   const [searchTerm, setSearchTerm] = useState('');
-  const router = useRouter();
 
   const processedProducts = useMemo(() => {
     let filtered = [...allProducts];
@@ -62,10 +62,6 @@ const ProductsPage = () => {
 
   const handlePageClick = (event) => {
     setCurrentPage(event.selected);
-  };
-
-  const handleProductClick = (id) => {
-    router.push(`/products/${id}`); 
   };
 
   const toggleSort = () => {
@@ -135,10 +131,10 @@ const ProductsPage = () => {
           Explore Our Product
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-10">
-          {currentItems.map((item, index) => (
-            <div
-              key={index}
-              onClick={() => handleProductClick(item.id)}
+          {currentItems.map((item) => (
+            <Link
+              href={`/products/${item.id}`}
+              key={item.id}
               className="cursor-pointer"
             >
               <ProductCard
@@ -148,7 +144,7 @@ const ProductsPage = () => {
                 rating={item.rating}
                 tag={item.tag}
               />
-            </div>
+            </Link>
           ))}
         </div>
 
@@ -169,6 +165,8 @@ const ProductsPage = () => {
           />
         </div>
       </div>
+      <div className="mt-16" />
+      <Footer />
     </div>
   );
 };
