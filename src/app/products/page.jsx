@@ -25,7 +25,6 @@ const ProductsPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
 
-  // Filter, sort and search logic
   const processedProducts = useMemo(() => {
     let filtered = [...allProducts];
 
@@ -68,6 +67,7 @@ const ProductsPage = () => {
   const handleProductClick = (id) => {
     router.push(`/products/${id}`);
   };
+  
 
   const toggleSort = () => {
     setSortOrder((prev) =>
