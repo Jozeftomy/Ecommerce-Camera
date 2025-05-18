@@ -1,135 +1,81 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import { Pencil } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { Navbar } from '../components/Navbar';
-import { Plus } from 'lucide-react';
 import Footer from '../components/Footer';
-import Image from 'next/image';
 
-const Page = () => {
+const ViewAddress = () => {
+  const [addresses, setAddresses] = useState([]);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const [paymentMethod, setPaymentMethod] = useState(null);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    const price = parseInt(searchParams.get('price') || '0');
-    const qty = parseInt(searchParams.get('quantity') || '1');
-    setTotalPrice(price);
-    setQuantity(qty);
-  }, [searchParams]);
+    const stored = localStorage.getItem('addresses');
+    if (stored) {
+      setAddresses(JSON.parse(stored));
+    }
+  }, []);
 
-  const handleAddAddressClick = () => {
+  const handleAddAddress = () => {
     router.push('/add-address');
   };
 
-  const deliveryCharge = 199;
-  const discount = 4200;
-  const grandTotal = totalPrice + deliveryCharge - discount;
-
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="w-full min-h-screen flex flex-col justify-between bg-white">
       <Navbar />
-      <div className="flex-1 flex flex-col items-center w-full">
-        <div className="w-full max-w-[1440px] px-4 md:px-[120px] pt-4">
-          <div className="flex flex-wrap items-center gap-2 text-base sm:text-lg font-medium text-[#292627CC] font-manrope">
-            <span>Home</span>
-            <span>{'>'}</span>
-            <span>Product</span>
-            <span>{'>'}</span>
-            <span>Product Details</span>
-            <span>{'>'}</span>
-            <span className="text-[#EB3238]">Checkout</span>
-          </div>
-        </div>
-        <div className="w-full max-w-[1440px] px-4 md:px-[120px] mt-8 flex justify-between items-center">
-          <h2 className="text-[30px] font-bold text-[#292627] font-manrope">Delivery Address</h2>
-          <button
-            onClick={handleAddAddressClick}
-            className="flex items-center gap-1 text-[#EB3238] font-semibold text-base hover:underline"
-          >
-            Add Address <Plus size={18} />
-          </button>
-        </div>
-        <div className="w-full max-w-[1440px] px-4 md:px-[120px] mt-8 mb-16 flex flex-col lg:flex-row gap-8">
-          <div className="w-full lg:w-[60%] p-[30px] border border-[#00000033] bg-white rounded-[20px] flex flex-col gap-[20px]">
-            <h3 className="text-[30px] font-bold text-[#292627] font-manrope">Payment Method</h3>
-            {/* payment options */}
-            {/* (same code as before) */}
-            <label className="flex items-center gap-4 border border-[#0000001A] p-4 rounded-[12px] cursor-pointer">
-              <input
-                type="radio"
-                name="payment"
-                checked={paymentMethod === 'card'}
-                onChange={() => setPaymentMethod('card')}
-              />
-              <div className="flex gap-4 items-center flex-wrap">
-                <span className="text-lg font-semibold">Credit or debit card</span>
-                <Image src="/images/visa.png" alt="VISA" width={40} height={30} />
-                <Image src="/images/mastercard.png" alt="MasterCard" width={40} height={30} />
-                <Image src="/images/paypal.png" alt="PayPal" width={40} height={30} />
-              </div>
-            </label>
-            <label className="flex items-center gap-4 border border-[#0000001A] p-4 rounded-[12px] cursor-pointer">
-              <input
-                type="radio"
-                name="payment"
-                checked={paymentMethod === 'upi'}
-                onChange={() => setPaymentMethod('upi')}
-              />
-              <div className="flex gap-4 items-center flex-wrap">
-                <span className="text-lg font-semibold">UPI Payments</span>
-                <Image src="/images/gpay.png" alt="GPay" width={40} height={30} />
-                <Image src="/images/upi.png" alt="UPI" width={40} height={30} />
-                <Image src="/images/phonepe.png" alt="PhonePe" width={40} height={30} />
-                <Image src="/images/bhmiupi.png" alt="BHIM UPI" width={40} height={30} />
-              </div>
-            </label>
-            <label className="flex items-center gap-4 border border-[#0000001A] p-4 rounded-[12px] cursor-pointer">
-              <input
-                type="radio"
-                name="payment"
-                checked={paymentMethod === 'cod'}
-                onChange={() => setPaymentMethod('cod')}
-              />
-              <span className="text-lg font-semibold">Cash on delivery</span>
-            </label>
-          </div>
-          <div className="w-full lg:w-[40%] p-[26px] border border-[#00000033] bg-white rounded-[20px] flex flex-col gap-[20px]">
-            <h3 className="text-[30px] font-bold text-[#292627] font-manrope">Order Summary</h3>
-            <div className="text-lg font-medium space-y-2">
-              <div className="flex justify-between">
-                <span>Item Total :</span>
-                <span>₹{totalPrice.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Delivery Charges :</span>
-                <span>₹{deliveryCharge}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Total :</span>
-                <span>₹{(totalPrice + deliveryCharge).toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between text-green-600">
-                <span>Discount :</span>
-                <span>-₹{discount}</span>
-              </div>
-            </div>
-            <div className="bg-[#fff1f1] p-4 rounded-xl flex justify-between items-center text-[20px] font-bold text-[#292627]">
-              <span>Order Total</span>
-              <span>₹{grandTotal.toLocaleString()}</span>
-            </div>
 
-            <button className="w-full h-[50px] mt-4 rounded-[40px] bg-[#EB3238] text-white font-semibold flex items-center justify-center hover:bg-[#c72c30] transition-all">
-              Check Out
-            </button>
-          </div>
+      <div className="w-full px-[5%] pt-6">
+        <div className="flex items-center gap-2 text-[16px] sm:text-[18px] font-medium text-[#292627CC] font-manrope mb-6">
+          <span>Home</span><span>{'>'}</span><span>Profile</span><span>{'>'}</span><span className="text-[#EB3238]">My Address</span>
         </div>
       </div>
+
+      <div className="w-full flex flex-col items-start gap-6 px-[5%] mt-6 mb-28">
+        {addresses.length === 0 ? (
+          <p className="text-[#666] text-sm">No address added yet.</p>
+        ) : (
+          addresses.map((addr, index) => (
+            <div
+              key={index}
+              className="w-full max-w-[1200px] border border-[#00000033] rounded-[30px] p-10 flex flex-col sm:flex-row justify-between sm:items-center gap-6 shadow-sm"
+            >
+              <div>
+                <h2 className="text-xl font-bold text-[#292627] mb-3 font-manrope">Address {index + 1}</h2>
+                <p className="text-[#292627] leading-[1.5rem] whitespace-pre-line">
+                  Mobile: {addr.mobile}
+                  <br />
+                  {addr.address}
+                  <br />
+                  District: {addr.district}
+                  <br />
+                  State: {addr.state}
+                  <br />
+                  Pincode: {addr.pincode}
+                  <br />
+                  India
+                </p>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <button className="flex items-center gap-1 text-[#EB3238] font-medium text-sm hover:underline">
+                  Edit Address <Pencil size={14} />
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+
+        <button
+          onClick={handleAddAddress}
+          className="w-[180px] h-[50px] rounded-[40px] border border-[#EB3238A8] bg-white flex items-center justify-center gap-[10px] text-[#EB3238] font-semibold hover:bg-[#ffecec]"
+        >
+          Add Address +
+        </button>
+      </div>
+
       <Footer />
     </div>
   );
 };
 
-export default Page;
+export default ViewAddress;
