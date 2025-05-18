@@ -40,6 +40,12 @@ export default function ProductPage({ params }) {
 
   if (!product) return notFound();
 
+  const handleBuyNow = () => {
+    const numericPrice = parseInt(product.price.replace(/,/g, ''));
+    const total = numericPrice * quantity;
+    router.push(`/checkout?price=${total}&quantity=${quantity}`);
+  };
+
   return (
     <div className="w-full flex flex-col items-center bg-white">
       <Navbar />
@@ -89,11 +95,9 @@ export default function ProductPage({ params }) {
               />
             ))}
           </div>
-
           <p className="text-xl sm:text-2xl font-semibold text-[#292627]">
             ₹ {product.price}
           </p>
-
           <p className="text-sm text-gray-600 leading-relaxed">
             <span className="font-semibold">Description: </span>
             {product.description}
@@ -115,7 +119,7 @@ export default function ProductPage({ params }) {
               </button>
             </div>
             <button
-              onClick={() => router.push('/checkout')}
+              onClick={handleBuyNow}
               className="px-6 py-2 rounded-full bg-[#EB3238] text-white font-semibold hover:bg-[#c72c30] transition-all"
             >
               Buy Now
@@ -131,7 +135,6 @@ export default function ProductPage({ params }) {
           ))}
         </div>
       </div>
-
       <Footer />
     </div>
   );

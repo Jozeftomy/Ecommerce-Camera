@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { Navbar } from '../components/Navbar';
 import ProductCard from '../components/ProductCard';
@@ -12,7 +12,7 @@ const allProducts = Array.from({ length: 30 }).map((_, i) => ({
   name: 'Canon EOS R5 Mark II',
   price: i % 3 === 0 ? '1,89,999' : i % 2 === 0 ? '1,72,999' : '1,74,999',
   image: `/images/camera-${(i % 3) + 1}.jpg`,
-  rating: 3,
+  rating: i % 5 === 0 ? 5 : 3,
   tag: 'Best Seller',
 }));
 
@@ -20,11 +20,46 @@ const itemsPerPage = 9;
 
 const ProductsPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [filterRating, setFilterRating] = useState(false);
+  const [sortOrder, setSortOrder] = useState('default'); // 'default' | 'asc' | 'desc'
+  const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
 
+  // Filter, sort and search logic
+  const processedProducts = useMemo(() => {
+    let filtered = [...allProducts];
+
+    if (searchTerm.trim()) {
+      const searchLower = searchTerm.toLowerCase();
+      filtered = filtered.filter((p) =>
+        p.name.toLowerCase().includes(searchLower)
+      );
+    }
+
+    if (filterRating) {
+      filtered = filtered.filter((p) => p.rating >= 4);
+    }
+
+    if (sortOrder === 'asc') {
+      filtered.sort(
+        (a, b) =>
+          parseInt(a.price.replace(/,/g, '')) -
+          parseInt(b.price.replace(/,/g, ''))
+      );
+    } else if (sortOrder === 'desc') {
+      filtered.sort(
+        (a, b) =>
+          parseInt(b.price.replace(/,/g, '')) -
+          parseInt(a.price.replace(/,/g, ''))
+      );
+    }
+
+    return filtered;
+  }, [searchTerm, filterRating, sortOrder]);
+
   const offset = currentPage * itemsPerPage;
-  const currentItems = allProducts.slice(offset, offset + itemsPerPage);
-  const pageCount = Math.ceil(allProducts.length / itemsPerPage);
+  const currentItems = processedProducts.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(processedProducts.length / itemsPerPage);
 
   const handlePageClick = (event) => {
     setCurrentPage(event.selected);
@@ -32,6 +67,23 @@ const ProductsPage = () => {
 
   const handleProductClick = (id) => {
     router.push(`/products/${id}`);
+  };
+
+  const toggleSort = () => {
+    setSortOrder((prev) =>
+      prev === 'default' ? 'asc' : prev === 'asc' ? 'desc' : 'default'
+    );
+    setCurrentPage(0);
+  };
+
+  const toggleFilter = () => {
+    setFilterRating((prev) => !prev);
+    setCurrentPage(0);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(0);
   };
 
   return (
@@ -50,26 +102,46 @@ const ProductsPage = () => {
             <input
               type="text"
               placeholder="Search"
+              value={searchTerm}
+              onChange={handleSearchChange}
               className="w-full bg-transparent focus:outline-none text-[16px] text-[#292627]"
             />
             <Search size={20} className="text-[#EB3238]" />
           </div>
 
           <div className="flex gap-4 w-full md:w-auto justify-center">
-            <button className="flex items-center gap-2 px-4 py-2 border border-[#D1D1D1] rounded-full text-[#292627] font-medium bg-white w-full md:w-auto justify-center">
-              <SlidersHorizontal size={16} /> Filter
+            <button
+              onClick={toggleFilter}
+              className="flex items-center gap-2 px-4 py-2 border border-[#D1D1D1] rounded-full text-[#292627] font-medium bg-white w-full md:w-auto justify-center"
+            >
+              <SlidersHorizontal size={16} />
+              {filterRating ? 'Clear Filter' : 'Filter Rating ≥ 4'}
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 border border-[#D1D1D1] rounded-full text-[#292627] font-medium bg-white w-full md:w-auto justify-center">
-              <ArrowUpDown size={16} /> Sort
+
+            <button
+              onClick={toggleSort}
+              className="flex items-center gap-2 px-4 py-2 border border-[#D1D1D1] rounded-full text-[#292627] font-medium bg-white w-full md:w-auto justify-center"
+            >
+              <ArrowUpDown size={16} />
+              {sortOrder === 'asc'
+                ? 'Price Low to High'
+                : sortOrder === 'desc'
+                ? 'Price High to Low'
+                : 'Sort'}
             </button>
           </div>
         </div>
+
         <h2 className="text-[22px] sm:text-[24px] font-bold text-[#292627] font-manrope text-center md:text-left">
           Explore Our Product
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-10">
           {currentItems.map((item, index) => (
-            <div key={index} onClick={() => handleProductClick(item.id)} className="cursor-pointer">
+            <div
+              key={index}
+              onClick={() => handleProductClick(item.id)}
+              className="cursor-pointer"
+            >
               <ProductCard
                 name={item.name}
                 price={item.price}
@@ -80,6 +152,7 @@ const ProductsPage = () => {
             </div>
           ))}
         </div>
+
         <div className="flex justify-center mt-4 hover:cursor-pointer">
           <ReactPaginate
             breakLabel="..."

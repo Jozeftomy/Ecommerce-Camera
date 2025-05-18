@@ -33,7 +33,7 @@ const page = () => {
         </div>
 
         <button className="w-[200px] h-[50px] mt-8 rounded-[40px] bg-[#EB3238] text-white font-semibold flex items-center justify-center hover:bg-[#c72c30] transition-all hover:cursor-pointer">
-          Click Me
+         Shop now
         </button>
       </div>
       <Footer />

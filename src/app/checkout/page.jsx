@@ -1,6 +1,6 @@
 'use client';
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Navbar } from '../components/Navbar';
 import { Plus } from 'lucide-react';
 import Footer from '../components/Footer';
@@ -8,11 +8,25 @@ import Image from 'next/image';
 
 const Page = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [paymentMethod, setPaymentMethod] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    const price = parseInt(searchParams.get('price') || '0');
+    const qty = parseInt(searchParams.get('quantity') || '1');
+    setTotalPrice(price);
+    setQuantity(qty);
+  }, [searchParams]);
 
   const handleAddAddressClick = () => {
     router.push('/add-address');
   };
+
+  const deliveryCharge = 199;
+  const discount = 4200;
+  const grandTotal = totalPrice + deliveryCharge - discount;
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
@@ -41,6 +55,8 @@ const Page = () => {
         <div className="w-full max-w-[1440px] px-4 md:px-[120px] mt-8 mb-16 flex flex-col lg:flex-row gap-8">
           <div className="w-full lg:w-[60%] p-[30px] border border-[#00000033] bg-white rounded-[20px] flex flex-col gap-[20px]">
             <h3 className="text-[30px] font-bold text-[#292627] font-manrope">Payment Method</h3>
+            {/* payment options */}
+            {/* (same code as before) */}
             <label className="flex items-center gap-4 border border-[#0000001A] p-4 rounded-[12px] cursor-pointer">
               <input
                 type="radio"
@@ -85,24 +101,24 @@ const Page = () => {
             <div className="text-lg font-medium space-y-2">
               <div className="flex justify-between">
                 <span>Item Total :</span>
-                <span>₹2,44,999</span>
+                <span>₹{totalPrice.toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
                 <span>Delivery Charges :</span>
-                <span>₹199</span>
+                <span>₹{deliveryCharge}</span>
               </div>
               <div className="flex justify-between">
                 <span>Total :</span>
-                <span>₹2,45,198</span>
+                <span>₹{(totalPrice + deliveryCharge).toLocaleString()}</span>
               </div>
               <div className="flex justify-between text-green-600">
                 <span>Discount :</span>
-                <span>-₹4200</span>
+                <span>-₹{discount}</span>
               </div>
             </div>
             <div className="bg-[#fff1f1] p-4 rounded-xl flex justify-between items-center text-[20px] font-bold text-[#292627]">
               <span>Order Total</span>
-              <span>₹1,98,999</span>
+              <span>₹{grandTotal.toLocaleString()}</span>
             </div>
 
             <button className="w-full h-[50px] mt-4 rounded-[40px] bg-[#EB3238] text-white font-semibold flex items-center justify-center hover:bg-[#c72c30] transition-all">
