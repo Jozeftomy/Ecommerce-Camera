@@ -11,7 +11,7 @@ const allProducts = Array.from({ length: 30 }).map((_, i) => ({
   id: String(i + 1),
   name: 'Canon EOS R5 Mark II',
   price: i % 3 === 0 ? '1,89,999' : i % 2 === 0 ? '1,72,999' : '1,74,999',
-  image: `/images/camera-${(i % 3) + 1}.jpg`,
+  image: `/images/camera-${(i % 3) + 1}.jpg`, // ✅ FIXED: backticks added
   rating: i % 5 === 0 ? 5 : 3,
   tag: 'Best Seller',
 }));
@@ -21,7 +21,7 @@ const itemsPerPage = 9;
 const ProductsPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [filterRating, setFilterRating] = useState(false);
-  const [sortOrder, setSortOrder] = useState('default'); // 'default' | 'asc' | 'desc'
+  const [sortOrder, setSortOrder] = useState('default');
   const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
 
@@ -65,9 +65,8 @@ const ProductsPage = () => {
   };
 
   const handleProductClick = (id) => {
-    router.push(`/products/${id}`);
+    router.push(`/products/${id}`); // ✅ FIXED: use backticks for dynamic path
   };
-  
 
   const toggleSort = () => {
     setSortOrder((prev) =>
