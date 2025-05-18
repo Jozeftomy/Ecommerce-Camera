@@ -1,5 +1,5 @@
 'use client';
-import { notFound, useRouter } from 'next/navigation';
+import { notFound, useRouter, useParams } from 'next/navigation';
 import { Navbar } from '../../components/Navbar';
 import { Star } from 'lucide-react';
 import { useState } from 'react';
@@ -32,8 +32,9 @@ allProducts[0] = {
     'Fujifilm X-H2 40MP APS-C X-Trans Sensor | Pixel Shift | IBIS System | Ultra High Resolution Mirrorless Camera | 8k 30p | Subject Tracking With XF16-80mm F/1:4 Lens For Pro Photographers And Videographers',
 };
 
-export default function ProductPage({ params }) {
+export default function ProductPage() {
   const router = useRouter();
+  const params = useParams(); 
   const product = allProducts.find((p) => p.id === params.id);
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(product?.images?.[0]);
